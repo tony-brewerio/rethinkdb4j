@@ -1,0 +1,12 @@
+# Gradle
+/.gradle
+/build
+/gradle.properties
+
+# Netbeans
+/.nb-gradle
+/nbproject
+
+# Eclipse
+/.settings
+/.project

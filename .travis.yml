@@ -1,0 +1,12 @@
+sudo: required
+
+language: java
+
+services:
+  - docker
+
+before_install:
+    - docker pull rethinkdb:2.1.5
+    - docker run -d -p 28015:28015 --name rethinkdb rethinkdb:2.1.5
+    - docker ps -a
+    - cp .travis.gradle.properties gradle.properties

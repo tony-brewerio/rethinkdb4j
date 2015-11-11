@@ -4,15 +4,22 @@ import com.tonybr.rethinkdb4j.ql2.Protocol;
 import com.tonybr.rethinkdb4j.ql2.Version;
 import io.netty.util.concurrent.Promise;
 
-public class RdbHandshake extends RdbRequest<String> {
-    
-    public final Version version;
-    public final Protocol protocol;
+public class RdbHandshake {
 
-    public RdbHandshake(Promise<String> promise, Version version, Protocol protocol) {
-        super(0L, promise);
-        this.version = version;
-        this.protocol = protocol;
+    public static final String RESPONSE_SUCCESS = "SUCCESS";
+
+    /**
+     * Driver only supports this version/protocol combination
+     */
+    public final Version version = Version.V0_4;
+    public final Protocol protocol = Protocol.JSON;
+
+    public final String authKey;
+    public final Promise<String> responsePromise;
+
+    public RdbHandshake(String authKey, Promise<String> responsePromise) {
+        this.authKey = authKey;
+        this.responsePromise = responsePromise;
     }
-    
+
 }

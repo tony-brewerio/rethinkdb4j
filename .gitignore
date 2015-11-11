@@ -10,3 +10,7 @@
 # Eclipse
 /.settings
 /.project
+
+# Idea
+/.idea
+/*.iml

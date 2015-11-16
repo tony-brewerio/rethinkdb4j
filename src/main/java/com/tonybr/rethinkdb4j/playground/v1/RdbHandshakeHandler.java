@@ -20,6 +20,15 @@ public class RdbHandshakeHandler extends ChannelDuplexHandler {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         if (msg instanceof String) {
+            if (RdbHandshake.RESPONSE_SUCCESS.equals(msg)) {
+                try {
+                    ctx.pipeline().forEach(e -> ctx.pipeline().remove(e.getValue()));
+                    ctx.pipeline().addLast(new RdbQueryChannelInitializer());
+                    ctx.pipeline().fireChannelRegistered();
+                } catch (Exception e) {
+                    e.getMessage();
+                }
+            }
             responsePromise.trySuccess((String) msg);
         } else {
             super.channelRead(ctx, msg);

@@ -1,5 +1,7 @@
 package com.tonybr.rethinkdb4j.playground.v1;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +28,13 @@ public class PlaygroundNettyClientV1 {
     public static void handshake(String host, int port) throws Exception {
         try (RdbConnectionManager rdbConnectionManager = new RdbConnectionManager()) {
             try (RdbConnection rdbConnection = rdbConnectionManager.connectSync(host, port)) {
-                rdbConnection.handshake(null);
+                rdbConnection.handshakeSync(null);
+                //
+                JsonArray query = new JsonArray();
+                query.add(1);
+                query.add("foo");
+                query.add(new JsonObject());
+                log.info("response for foo query -> {}", rdbConnection.executeSync(query));
             }
         }
     }

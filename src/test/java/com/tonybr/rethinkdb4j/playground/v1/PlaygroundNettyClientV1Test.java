@@ -1,5 +1,7 @@
 package com.tonybr.rethinkdb4j.playground.v1;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import io.netty.channel.ChannelException;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -77,6 +79,21 @@ public class PlaygroundNettyClientV1Test {
             } catch (ChannelException e) {
                 assertThat(e.getMessage(), containsString("closed"));
             }
+        }
+    }
+
+    @org.junit.Test
+    public void testSimplestPossibleQuery() throws Exception {
+        try (RdbConnection rdbConnection = rdbConnectionManager.connectSync(host, port)) {
+            rdbConnection.handshakeSync(null);
+            JsonArray query = new JsonArray();
+            query.add(1);
+            query.add("foo");
+            query.add(new JsonObject());
+            JsonObject response = rdbConnection.executeSync(query);
+            assertThat(response.get("t").getAsInt(), equalTo(1));
+            assertThat(response.get("r").getAsJsonArray().get(0).getAsString(), equalTo("foo"));
+            assertThat(response.get("n").getAsJsonArray().size(), equalTo(0));
         }
     }
 

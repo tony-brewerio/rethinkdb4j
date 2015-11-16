@@ -8,6 +8,8 @@ dependencies {
     // networking
     compile 'io.netty:netty-all:4.0.33.Final'
     compile 'io.netty:netty-transport:4.0.33.Final'
+    // json
+    compile 'com.google.code.gson:gson:2.4'
     // logging
     compile 'org.slf4j:slf4j-api:1.7.12'
     runtime 'ch.qos.logback:logback-classic:1.1.3'

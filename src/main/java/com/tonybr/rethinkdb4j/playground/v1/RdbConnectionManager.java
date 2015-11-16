@@ -21,7 +21,7 @@ public class RdbConnectionManager implements AutoCloseable {
                 .channel(NioSocketChannel.class)
                 .option(ChannelOption.SO_KEEPALIVE, true)
                 .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 1000)
-                .handler(new RdbChannelInitializer());
+                .handler(new RdbHandshakeChannelInitializer());
     }
 
     public Future<RdbConnection> connect(String host, int port) {
